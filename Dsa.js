@@ -91,6 +91,38 @@ towerOfHanoi(num, sourcePeg, auxiliaryPeg, destinationPeg);
 
 // Q6. Read about infix, prefix, and postfix expressions. Write a program to convert postfix to prefix expression.
 
+
+function isOperator(char) {
+  return ['+', '-', '*', '/', '^'].includes(char);
+}
+
+function postfixToPrefix(postfixExpression) {
+  const stack = [];
+  const operators = new Set(['+', '-', '*', '/', '^']);
+
+  for (let char of postfixExpression) {
+      if (!isOperator(char)) {
+          stack.push(char);
+      } else {
+          const operand1 = stack.pop();
+          const operand2 = stack.pop();
+          const prefix = char + operand2 + operand1;
+          stack.push(prefix);
+      }
+  }
+
+  if (stack.length !== 1) {
+      throw new Error("Invalid postfix expression");
+  }
+
+  return stack[0];
+}
+
+// Example usage:
+const postfixExpression = "ab+c*";
+const prefixExpressions = postfixToPrefix(postfixExpression);
+console.log( prefixExpressions);
+
 // Q7. Write a program to convert prefix expression to infix expression.
 
 function isOperator(char) {
